@@ -25,7 +25,7 @@ export class BaseService {
   }
 
   deleteProduct(body:any){
-    this.http.delete(this.deleteProduct+body.id).forEach(
+    this.http.delete(this.url+body.id).forEach(
       ()=>this.downloadProducts()
     )
   }

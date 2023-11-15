@@ -13,6 +13,11 @@ export class ProductsListComponent implements OnDestroy{
     oszlopok:any
 
     feliratkozas:any
+    ujTermek:any={}
+
+    szo:any
+    hol:any="Mindenhol"
+    mezo:any=''
 
     constructor(private base:BaseService, private config:ConfigService){
 
@@ -25,8 +30,29 @@ export class ProductsListComponent implements OnDestroy{
       )      
     }
 
+    updateProduct(termek:any){
+      this.base.updateProduct(termek)
+    }
 
+    deleteProduct(termek:any){
+      this.base.deleteProduct(termek)
+    }
+    addProduct(){
+      this.base.addProduct(this.ujTermek)
+      this.ujTermek={}
+    }
 
+    kiValaszt(mezo:any){
+      console.log(mezo)
+      if (mezo=='') {
+        this.hol="Mindenhol"
+        this.mezo=''
+      }
+      else {
+        this.hol=mezo.text_hu
+        this.mezo=mezo.key
+      }
+    }
 
     ngOnDestroy(): void {
       alert("Vége mindennek! "+this.feliratkozas)

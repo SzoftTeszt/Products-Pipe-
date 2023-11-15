@@ -1,20 +1,72 @@
 <!-- {{termekek|json}} -->
 <!-- {{oszlopok|json}} -->
-
 <div class="row">
-    <div *ngFor="let oszlop of oszlopok" class="col fw-bold my-3">
+    <div class="col-4">
+        <span>Keresés:</span>
+       
+        
+        <div class="dropdown">
+           
+            <div ngbDropdown class="d-inline-block">
+                <button type="button" class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle>
+                    {{hol}}
+                </button>
+                <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                    <button (click)="kiValaszt('')" ngbDropdownItem>Mindehol</button>
+
+                    <button (click)="kiValaszt(o)" *ngFor="let o of oszlopok" ngbDropdownItem>{{o.text_hu}}</button>
+                  
+                </div>
+            </div>
+        </div>
+         <input [(ngModel)]="szo" type="text" class="form-control">
+        </div>
+    
+
+</div>
+
+
+<div class="row fw-bold my-3">
+    <div *ngFor="let oszlop of oszlopok" class="col">
         {{oszlop.text_hu}}
     </div>
-</div>
-
-<div *ngFor="let termek of termekek" class="row">
-    <div *ngFor="let oszlop of oszlopok" class="col-2">
-        {{termek[oszlop.key]}}
+    <div class="col">
+        Műveletek
     </div>
 </div>
 
-npm uninstall -g @angular/cli
-npm cache clear --force
-npm start --reset-cache
+<div class="row my-3">
+    <div *ngFor="let oszlop of oszlopok" class="col-2">
 
-npm install -g @angular/cli@16.2.0
+        <ng-container *ngIf="oszlop.type=='plain'; else bevitel">
+            {{ujTermek[oszlop.key]}}
+        </ng-container>
+
+        <ng-template #bevitel>
+            <input [(ngModel)]="ujTermek[oszlop.key]" [type]="oszlop.type" class="form-control">
+        </ng-template>
+        
+    </div>
+    <div class="col">
+        <button (click)="addProduct()" type="button" class="btn btn-primary">Add</button>     
+    </div>
+</div>
+
+<div *ngFor="let termek of (termekek|kereso:szo:mezo)|rendezo" class="row my-1">
+    <div *ngFor="let oszlop of oszlopok" class="col-2">
+
+        <ng-container *ngIf="oszlop.type=='plain'; else bevitel">
+            {{termek[oszlop.key]}}
+        </ng-container>
+
+        <ng-template #bevitel>
+            <input [(ngModel)]="termek[oszlop.key]" [type]="oszlop.type" class="form-control">
+        </ng-template>
+        
+    </div>
+    <div class="col">
+        <button (click)="updateProduct(termek)" type="button" class="btn btn-primary">Edit</button>
+        <button (click)="deleteProduct(termek)" type="button" class="btn btn-primary ms-1">Delete</button>
+    </div>
+</div>
+
