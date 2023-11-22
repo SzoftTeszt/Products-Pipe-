@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { ConfigService } from '../config.service';
+import { SearchService } from '../search.service';
 
 @Component({
   selector: 'app-nav',
@@ -13,9 +14,12 @@ export class NavComponent {
   szo:any
 
 
-  constructor( private config:ConfigService){
+  constructor( private config:ConfigService, private search:SearchService){
 
-    this.oszlopok=this.config.getProductsColumns()
+    this.config.getProductsColumns().subscribe(
+      (res:any)=> {if (res)      
+      this.oszlopok=res.productsList.productsColumns}
+    )
   }
 
   kiValaszt(mezo:any){
@@ -28,5 +32,12 @@ export class NavComponent {
       this.hol=mezo.text_hu
       this.mezo=mezo.key
     }
+  }
+  keresesInditasa(){
+    this.search.setSearchSub(this.mezo, this.szo)
+  }
+
+  changeLang(sign:any){
+    this.config.setLanguage(sign)
   }
 }

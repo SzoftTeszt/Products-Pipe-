@@ -1,20 +1,29 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { BehaviorSubject, Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ConfigService {
-  private productsColumns=[
-    {key:"id", text_hu:"#", type:"plain"},
-    {key:"name", text_hu:"Név", type:"text"},
-    {key:"price", text_hu:"Ár", type:"number"},
-    {key:"description", text_hu:"Leírás", type:"text"},
-    {key:"image_url", text_hu:"Kép link", type:"text"},
-  ]
+ 
+  productsColumns = new Subject()
 
-  constructor() { }
+  constructor(private http:HttpClient) {
+    this.loadLanguageJson('en')
+   }
+
+  loadLanguageJson(sign:any){
+    this.http.get('../assets/lang_'+sign+'.json').subscribe(
+      (res)=> this.productsColumns.next(res)
+    )
+  }
 
   getProductsColumns(){
     return this.productsColumns
+  }
+
+  setLanguage(sign:any){
+    this.loadLanguageJson(sign)
   }
 }

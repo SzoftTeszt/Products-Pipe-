@@ -1,0 +1,14 @@
+{
+    "productsList":{
+
+        "productsColumns":[
+            {"key":"id", "text_hu":"#", "type":"plain"},
+            {"key":"name", "text_hu":"Name", "type":"text"},
+            {"key":"price", "text_hu":"Price", "type":"number"},
+            {"key":"description", "text_hu":"Description", "type":"text"},
+            {"key":"image_url", "text_hu":"ImageUrl", "type":"text"}
+        ],
+        "btnAdd":"Add"
+
+}
+}

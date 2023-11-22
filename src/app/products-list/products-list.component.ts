@@ -1,6 +1,7 @@
 import { Component, OnDestroy } from '@angular/core';
 import { BaseService } from '../base.service';
 import { ConfigService } from '../config.service';
+import { SearchService } from '../search.service';
 
 @Component({
   selector: 'app-products-list',
@@ -21,9 +22,18 @@ export class ProductsListComponent implements OnDestroy{
     rendezMezo:any='id'
     irany:any=0
 
-    constructor(private base:BaseService, private config:ConfigService){
+    constructor(private base:BaseService, private config:ConfigService, private search:SearchService){
 
-      this.oszlopok=this.config.getProductsColumns()
+      this.search.getSearchSub().subscribe(
+        (a:any)=>{
+          this.mezo=a.nev1
+          this.szo=a.nev2
+        }
+      )
+
+      this.config.getProductsColumns().subscribe(
+        (res:any)=>this.oszlopok=res.productsList.productsColumns
+      )
 
       this.feliratkozas=this.base.getProducts()
       
