@@ -17,7 +17,9 @@ export class ProductsListComponent implements OnDestroy{
 
     szo:any
     hol:any="Mindenhol"
-    mezo:any=''
+    mezo:any=""
+    rendezMezo:any='id'
+    irany:any=0
 
     constructor(private base:BaseService, private config:ConfigService){
 
@@ -31,6 +33,7 @@ export class ProductsListComponent implements OnDestroy{
     }
 
     updateProduct(termek:any){
+      termek.price=Number(termek.price)
       this.base.updateProduct(termek)
     }
 
@@ -38,6 +41,7 @@ export class ProductsListComponent implements OnDestroy{
       this.base.deleteProduct(termek)
     }
     addProduct(){
+      this.ujTermek.price=Number(this.ujTermek.price)
       this.base.addProduct(this.ujTermek)
       this.ujTermek={}
     }
@@ -54,8 +58,22 @@ export class ProductsListComponent implements OnDestroy{
       }
     }
 
+    rendez(oszlop:any){
+        this.irany++
+        if (this.irany==3){
+          this.irany=0
+          this.rendezMezo="id"
+        }
+        else{
+          this.rendezMezo=oszlop.key
+        }
+    }
+
+
     ngOnDestroy(): void {
       alert("Vége mindennek! "+this.feliratkozas)
       if (this.feliratkozas) this.feliratkozas.unsubscribe()
     }
+
+   
 }

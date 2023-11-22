@@ -9,6 +9,9 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ProductsListComponent } from './products-list/products-list.component';
 import { KeresoPipe } from './kereso.pipe';
 import { RendezoPipe } from './rendezo.pipe';
+import { NavComponent } from './nav/nav.component';
+import { HomeComponent } from './home/home.component';
+import { SiginComponent } from './sigin/sigin.component';
 
 
 @NgModule({
@@ -16,7 +19,10 @@ import { RendezoPipe } from './rendezo.pipe';
     AppComponent,
     ProductsListComponent,
     KeresoPipe,
-    RendezoPipe
+    RendezoPipe,
+    NavComponent,
+    HomeComponent,
+    SiginComponent
   ],
   imports: [
     BrowserModule,

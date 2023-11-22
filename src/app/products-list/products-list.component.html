@@ -27,8 +27,10 @@
 
 
 <div class="row fw-bold my-3">
-    <div *ngFor="let oszlop of oszlopok" class="col">
+    <div (click)="rendez(oszlop)" *ngFor="let oszlop of oszlopok" class="col">
         {{oszlop.text_hu}}
+        <i *ngIf="irany==2 && oszlop.key==mezo" class="bi bi-arrow-down"></i>
+        <i *ngIf="irany==1 && oszlop.key==mezo" class="bi bi-arrow-up"></i>
     </div>
     <div class="col">
         Műveletek
@@ -52,7 +54,7 @@
     </div>
 </div>
 
-<div *ngFor="let termek of (termekek|kereso:szo:mezo)|rendezo" class="row my-1">
+<div *ngFor="let termek of (termekek|kereso:szo:mezo)|rendezo:rendezMezo:irany" class="row my-1">
     <div *ngFor="let oszlop of oszlopok" class="col-2">
 
         <ng-container *ngIf="oszlop.type=='plain'; else bevitel">
