@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { ConfigService } from '../config.service';
 
 @Component({
   selector: 'app-nav',
@@ -6,5 +7,26 @@ import { Component } from '@angular/core';
   styleUrls: ['./nav.component.css']
 })
 export class NavComponent {
+  oszlopok:any
+  hol:any="Mindenhol"
+  mezo:any=""
+  szo:any
 
+
+  constructor( private config:ConfigService){
+
+    this.oszlopok=this.config.getProductsColumns()
+  }
+
+  kiValaszt(mezo:any){
+    console.log(mezo)
+    if (mezo=='') {
+      this.hol="Mindenhol"
+      this.mezo=''
+    }
+    else {
+      this.hol=mezo.text_hu
+      this.mezo=mezo.key
+    }
+  }
 }
